@@ -22,8 +22,8 @@ The downloaded checkpoints and Data will be unpacked to `./CheckPoints` and `./D
 The Experiment describes how the timing channels of adaptive neural networks can be exploited over a LAN, the experiment can also be extended to the public internet as well, with the only difference being that the server side is hosted on some public cloud server.
 
 The experiment comprises of two main stages
-1. Profiling Stage - This is describes how the client(adversary) obtains the timing profile of the target model hosted on the server side.
-2. Evaluation Stage - This is describes how the client(adversary) evaluates the target model timing profile obtained over the LAN in the profiling stage for information leakage.
+1. Profiling Stage - This stage describes how the client(adversary) obtains the timing profile of the target model hosted on the server side.
+2. Evaluation Stage - This stage describes how the client(adversary) evaluates the target model timing profile obtained over the LAN in the profiling stage for information leakage.
 
 ## Profiling Stage
 For experiment over a LAN, ideally two machines would be needed to represent the client and the server side respectively and connected together via some network device such as switch or a router. If this setup proves to be an hassle the experiment can still be simulated using a single machine with two terminals to simulate the server and the client machines respectively.
