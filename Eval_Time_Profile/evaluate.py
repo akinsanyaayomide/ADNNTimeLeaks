@@ -251,20 +251,17 @@ ax = sns.kdeplot(df.Time,bw_adjust=1)
 kde_fig = ax.get_figure()
 kde_fig.savefig(filename,dpi=300)
 
-print("Length of Df", len(df))
 kde_data = sns.kdeplot(df.Time,bw_adjust=1).get_lines()[0].get_data()
 x = kde_data[0]
 y = kde_data[1]
 
 lowest_points = find_cluster_ranges(x,y)
 lowest_points = sorted(lowest_points)
-print(len(lowest_points))
-#lowest_points = [0.006576592741782666, 0.007966801446716857, 0.010123407258217334]
+#print(len(lowest_points))
 
 n_clusters = len(lowest_points)-1
-print('Ayomide')
-print("\n")
-print("Total Number of Time Clusters Found is ",n_clusters)
+#print("\n")
+#print("Total Number of Time Clusters Found is ",n_clusters)
 
 # Define Class labels
 
@@ -329,8 +326,8 @@ if leakage_method == "Model":
     msr(df,filename,outputsize)
 elif leakage_method == "Entropy":
     buckets,b = ent_leakage(n_clusters,classes)
-    print(buckets)
-    print(b)
+    #print(buckets)
+    #print(b)
 else:
     print("Kindly select Leakage Method")
 
