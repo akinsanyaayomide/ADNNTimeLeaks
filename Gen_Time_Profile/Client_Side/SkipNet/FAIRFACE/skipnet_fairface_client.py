@@ -8,6 +8,7 @@ import torchvision
 from torchvision import datasets, transforms, utils
 from torch.autograd import Variable
 from torchvision.transforms import ToTensor
+import pandas as pd
 import numpy as np
 
 import data_collector
@@ -33,6 +34,34 @@ classes = ['0-19',
 
 m =1
 
+def remove_outliers(file_path):
+    df = pd.read_csv(file_path)
+    result = pd.DataFrame()
+    n=1.0
+    for i in df["No of Blocks"].unique():
+        #print(i)
+        df_1 = df[df['No of Blocks'] == i]
+        df_1.reset_index(drop=True, inplace=True)
+        Q1 = np.percentile(df_1['Time'], 25, method='midpoint')
+        Q3 = np.percentile(df_1['Time'], 75, method='midpoint')
+        IQR = Q3 - Q1
+        upper = np.where(df_1['Time'] >= (Q3 + n * IQR))
+        lower = np.where(df_1['Time'] <= (Q1 - n * IQR))
+
+        ''' Replacing the Outliers with Mean '''
+        non_outlier_values = df_1[(df_1['Time'] >= (Q1 - n * IQR)) & (df_1['Time'] <= (Q3 + n * IQR))]['Time']
+        mean_value = round(np.mean(non_outlier_values),4)
+        df_1.loc[upper[0], 'Time'] = mean_value
+        df_1.loc[lower[0], 'Time'] = mean_value
+
+        result = pd.concat([result, df_1])
+
+    result = result.reset_index(drop=True, inplace=False)
+    result = result.drop(["No of Blocks"], axis=1)
+    df = result
+    
+    return df
+
 def remove(string):
     return "".join(string.split())
 
@@ -57,7 +86,7 @@ for x,y in test_dl:
     time = round(time*int(block)/54,4)
 
     
-    notes_path = os.path.join('.','lan_client_server_timing_skipnet_Age.csv')
+    notes_path = os.path.join('.','lan_client_server_timing_skipnet_fairface.csv')
     if os.path.exists(notes_path) == True :    
         with open (notes_path,"a") as csvfile:
             fieldnames = ['No of Blocks','Label','Time']
@@ -78,3 +107,6 @@ for x,y in test_dl:
             filewriter.writerow({fieldnames[0]: block,fieldnames[1]:label,
             fieldnames[2]:time})
             csvfile.close()
+
+df = remove_outliers(notes_path)
+df.to_csv(notes_path)
