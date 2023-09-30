@@ -245,7 +245,7 @@ df = remove_outliers(file_path)
 # Use Kernel Density Esitimate (KDE) Algorithm to find Optimal Partitions (Clusters)
 
 # Visualize KDE's Output
-filename = sys.argv[3]
+filename = 'output_'
 filename = filename + '_kde_clusters.png'
 ax = sns.kdeplot(df.Time,bw_adjust=1)
 kde_fig = ax.get_figure()
@@ -282,7 +282,7 @@ percentage_distribution = df['Cluster'].value_counts(normalize=True) * 100
 # Convert the Series to a dataframe
 df_percentage = percentage_distribution.reset_index()
 df_percentage.columns = ['Cluster', 'Percentage']
-b = sys.argv[3]+'_cluster_input_distribution.csv'
+b = 'output'+'_cluster_input_distribution.csv'
 df_percentage.to_csv(b)
 
 # Calculate the percentage distribution of values in the 'Cluster' column
@@ -291,7 +291,7 @@ percentage_distribution_ = df['Bins'].value_counts(normalize=True) * 100
 # Convert the Series to a dataframe
 df_percentage_ = percentage_distribution_.reset_index()
 df_percentage_.columns = ['Bins', 'Percentage']
-b_ = sys.argv[3]+'_bins_input_distribution.csv'
+b_ ='output'+'_bins_input_distribution.csv'
 df_percentage_.to_csv(b_)
 
 # Create Histogram Profile from the KDE cluster Ranges
@@ -300,18 +300,32 @@ X = df[['Bins',]].to_numpy()
 Y = df[['Label',]].to_numpy()
 
 
-filename = sys.argv[3]
+filename = 'output'
 filename = filename+'_hist.png'
 output_histogram(X,Y,filename)
 
 
 
-leakage_method = sys.argv[2]
+leakage_method = 'Model'
 
 if leakage_method == "Model":
-    filename = sys.argv[3]
+    filename ='output_'
     filename=filename+"model_training.png"
-    outputsize = int(sys.argv[4])
+    file_path_list = file_path.split('_')
+    if file_path_list[-1][:-4] == '10':
+        outputsize = 10
+    elif file_path_list[-1][:-4] == '100':
+        outputsize = 20
+    elif file_path_list[-1][:-4] == 'cancer':
+        outputsize = 2
+    elif file_path_list[-1][:-4] == 'fairface':
+        outputsize = 3
+    else:
+        print('Invalid Output Size')
+        sys.exit()
+    
+
+    
     msr(df,filename,outputsize)
 elif leakage_method == "Entropy":
     buckets,b = ent_leakage(n_clusters,classes)
