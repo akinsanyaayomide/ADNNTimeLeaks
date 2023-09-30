@@ -1,4 +1,5 @@
-# ADNNTimeLeaks
+# Timing Channels in Adaptive Neural Networks
+
 This repository contains source code, scripts and saved model objects that can be used to reproduce similar results to the lan results table in our paper.
 
 
