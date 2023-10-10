@@ -60,14 +60,14 @@ def remove(string):
     return "".join(string.split())
 print("client started")
 #k=1
-for i in range(10000):
+for i in range(9355):
     #print(k)
     #k +=1
     time_list =[]
     for j in range(m):
         x = data_test[i][0]
         y = data_test[i][1]
-        #label = classes[y]
+        label = classes[y]
         torch.save(x, 'x.pt')
         test_file = open('x.pt', "rb")
         #buff.seek(0)
@@ -86,7 +86,7 @@ for i in range(10000):
     #print(b)
     block = remove(b[-2:])
 
-    label = remove(b[:7])
+    #label = remove(b[:7])
     #storage[label].append(time)
     #print(remove(block))
     #print(remove(b[:7]))
