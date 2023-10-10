@@ -315,6 +315,8 @@ if leakage_method == "Model":
         outputsize = 20
     elif file_path_list[-1][:-4] == 'cancer':
         outputsize = 2
+    elif file_path_list[-1][:-4] == 'adv':
+        outputsize = 2
     elif file_path_list[-1][:-4] == 'fairface':
         outputsize = 3
     else:
