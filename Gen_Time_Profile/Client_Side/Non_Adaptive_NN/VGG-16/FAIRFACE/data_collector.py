@@ -197,6 +197,12 @@ def equal_df(df,x):
     
     return result
     
+path = os.getcwd()
+path = path.split('/')
+root_dir_index = path.index('ADNNTimeLeaks')
+
+data_path = path[:root_dir_index+1]+['Data','FAIRFACE']
+data_path = '/'.join(data_path)
 
 class FairFaceDataset(Dataset):
     def __init__(self, data, path , transform = None):
@@ -236,18 +242,19 @@ class TRAITDataColl(DataColl):
                             transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
                         ])
         #full training set, no normalisation
-        df = categorize_traits("/Users/Ayomide_1/Downloads/fairface_label_train.csv")
+        df = categorize_traits(data_path+"/fairface_label_train.csv")
         df = equal_df(df,9800)
         
-        df2 = categorize_traits("/Users/Ayomide_1/Downloads/fairface_label_val.csv")
+        df2 = categorize_traits(data_path+"/fairface_label_val.csv")
         df2 = equal_df(df2,1200)
+
         self.full_train_set = FairFaceDataset(df,
-                                    "/Users/Ayomide_1/ml/Branchy_side_channels/earlyexitnet",
+                                    data_path,
                                      transform=self.tfs
                                     )
         #full testing set
         self.full_test_set = FairFaceDataset(df2,
-                                    "/Users/Ayomide_1/ml/Branchy_side_channels/earlyexitnet",
+                                    data_path,
                                      transform=self.tfs_1
                                     )
 

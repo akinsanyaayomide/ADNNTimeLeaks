@@ -250,6 +250,12 @@ class TRAITDataColl(DataColl):
                                     "/Users/Ayomide_1/ml/Branchy_side_channels/earlyexitnet",
                                      transform=self.tfs_1
                                     )
+path = os.getcwd()
+path = path.split('/')
+root_dir_index = path.index('ADNNTimeLeaks')
+
+data_path = path[:root_dir_index+1]+['Data','CANCER']
+data_path = '/'.join(data_path)
 
 class CANCERDataColl(DataColl):
     def _load_sets(self):
@@ -266,10 +272,10 @@ class CANCERDataColl(DataColl):
                             transforms.ToTensor(),
                             transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])])
         #full training set, no normalisation
-        self.full_train_set = torchvision.datasets.ImageFolder(os.path.join('/Users/Ayomide_1/Downloads/archive (1)',
+        self.full_train_set = torchvision.datasets.ImageFolder(os.path.join(data_path,
                                                                             'train'),transform=self.tfs)
         #full testing set
-        self.full_test_set = torchvision.datasets.ImageFolder(os.path.join('/Users/Ayomide_1/Downloads/archive (1)',
+        self.full_test_set = torchvision.datasets.ImageFolder(os.path.join(data_path,
                                                                             'test'),transform=self.tfs_1)
 
 class CIFAR10DataColl(DataColl):
