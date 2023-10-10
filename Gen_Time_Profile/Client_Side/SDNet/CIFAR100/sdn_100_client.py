@@ -23,7 +23,7 @@ normalize = transforms.Normalize(mean=[0.507, 0.487, 0.441], std=[0.267, 0.256, 
 normalized = transforms.Compose([transforms.ToTensor(), normalize])
 
 
-data_test = datasets.CIFAR10(root='./data', train=False, download=True, transform=normalized)
+data_test = datasets.CIFAR100(root='./data', train=False, download=True, transform=normalized)
 
 classes =  (data_test.classes)
 
