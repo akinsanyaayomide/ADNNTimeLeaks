@@ -59,7 +59,7 @@ def remove_outliers(file_path):
 def remove(string):
     return "".join(string.split())
 
-for i in range(10000):
+for i in range(9355):
     time_list =[]
     for j in range(m):
         x = data_test[i][0]
@@ -80,7 +80,7 @@ for i in range(10000):
     time = round(time*int(block)/18,4)
 
     
-    notes_path = os.path.join('.','lan_client_server_timing_skipnet_10.csv')
+    notes_path = os.path.join('.','lan_client_server_timing_skipnet_10_adv.csv')
     if os.path.exists(notes_path) == True :    
         with open (notes_path,"a") as csvfile:
             fieldnames = ['No of Blocks','Label','Time']
