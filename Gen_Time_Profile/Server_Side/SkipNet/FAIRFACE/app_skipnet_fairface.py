@@ -63,6 +63,7 @@ if args.resume:
 classes = ['0-19',
  '20-49',
  'more than 50']
+device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 model.eval()
 
@@ -81,6 +82,7 @@ def get_output():
     if request.method == 'POST':
         x = request.files['x']
         x = torch.load(x)
+        x = x.to(device)
         #x = torch.unsqueeze(x, dim=0)
         with torch.no_grad():
             x = Variable(x)

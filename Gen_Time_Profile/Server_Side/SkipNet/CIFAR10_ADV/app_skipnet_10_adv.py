@@ -59,6 +59,7 @@ if args.resume:
 
 
 classes = ['plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
+device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 model.eval()
 
@@ -78,6 +79,7 @@ def get_output():
         x = request.files['x']
         x = torch.load(x)
         x = torch.unsqueeze(x, dim=0)
+        x = x.to(device)
         with torch.no_grad():
             x = Variable(x)
             pred,masks,_ = model(x)
