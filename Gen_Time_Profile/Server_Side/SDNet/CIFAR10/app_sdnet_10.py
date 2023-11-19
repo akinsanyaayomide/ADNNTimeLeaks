@@ -47,6 +47,7 @@ def get_output():
     if request.method == 'POST':
         x = request.files['x']
         x = torch.load(x)
+        x = x.to(device)
         x = torch.unsqueeze(x, dim=0)
         with torch.no_grad():
             pred,exit_ ,_= sdn_model(x)
