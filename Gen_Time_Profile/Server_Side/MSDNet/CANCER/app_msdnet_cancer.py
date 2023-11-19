@@ -112,6 +112,7 @@ def get_output():
     if request.method == 'POST':
         x = request.files['x']
         x = torch.load(x)
+        x = x.to(device)
         #x = torch.unsqueeze(x, dim=0)
         pred,exit_ = model(x)
         p = pred.argmax(dim=1).item()

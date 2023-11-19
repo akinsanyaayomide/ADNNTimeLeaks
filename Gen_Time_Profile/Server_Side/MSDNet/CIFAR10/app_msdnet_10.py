@@ -107,6 +107,7 @@ def get_output():
         x = request.files['x']
         x = torch.load(x)
         x = torch.unsqueeze(x, dim=0)
+        x = x.to(device)
         pred,exit_ = model(x)
         p = pred.argmax(dim=1).item()
         label = classes[p]
