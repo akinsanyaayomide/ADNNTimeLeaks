@@ -42,6 +42,8 @@ agent.eval()
 data_test = torchvision.datasets.CIFAR100('./data_',
         download=True,train=False,transform=ToTensor())
 classes =  (data_test.classes)
+device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
+
 
 #storage = {x:[] for x in classes}
 
@@ -92,6 +94,7 @@ def get_output():
         x = request.files['x']
         x = torch.load(x)
         x = torch.unsqueeze(x, dim=0)
+        x = x.to(device)
         probs, _ = agent(x)
         policy = probs.clone()
         policy[policy<0.5] = int(0)

@@ -26,6 +26,8 @@ args.load = model_path
 
 rnet, agent = utils.get_model(args.model)
 classes =  ['plane','car','bird','cat','deer','dog','frog','horse','ship','truck']
+device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
+
 
 dic = {x:y for x,y in zip(range(10),classes)}
 
@@ -86,6 +88,7 @@ def get_output():
         x = request.files['x']
         x = torch.load(x)
         x = torch.unsqueeze(x, dim=0)
+        x = x.to(device)
         probs, _ = agent(x)
         policy = probs.clone()
         policy[policy<0.5] = int(0)
